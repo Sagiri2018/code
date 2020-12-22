@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/work/contacts/main.c
+stdio.h
+-
+stdlib.h
+-
+sqlite3.h
+D:/work/contacts/sqlite3.h
+
