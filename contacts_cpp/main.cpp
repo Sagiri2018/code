@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <stdio.h>
+
 #include <stdlib.h>
 
 using namespace std;
@@ -21,13 +22,13 @@ int main() {
 }
 
 void inquire() {
-    cout << "ÄãÑ¡ÔñÁË²éÑ¯ÁªÏµÈË" << endl;
+    cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ë²ï¿½Ñ¯ï¿½ï¿½Ïµï¿½ï¿½" << endl;
     int choice1;
-    cout << "ÇëÑ¡ÔñÄãÒª²éÑ¯µÄÒÀ¾Ý" << endl;
-    cout << "1.Í¨¹ýÐÕÃû²éÑ¯" << endl;
-    cout << "2.Í¨¹ýÊÖ»úºÅ²éÑ¯" << endl;
-    cout << "3.·µ»ØÉÏ²ã" << endl;
-    cout << "ÇëÊäÈëÑ¡Ïî£º";
+    cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
+    cout << "1.Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯" << endl;
+    cout << "2.Í¨ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Å²ï¿½Ñ¯" << endl;
+    cout << "3.ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½" << endl;
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½î£º";
     cin >> choice1;
     switch (choice1) {
         case 1: {
@@ -42,19 +43,19 @@ void inquire() {
             char *errmsg = NULL;
             char **table = NULL;
             int r = 0, c = 0;
-            cout << "ÇëÊäÈëÐè²éÑ¯µÄÐÕÃû£º";
+            cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
             cin >> name;
             sprintf(p, "select* from persons where name = \'%s\';", name);
             sqlite3_get_table(db, p, &table, &r, &c, &errmsg);
             if (errmsg == NULL) {
                 if (r != 0) {
-                    cout << "²éÑ¯³É¹¦£¡" << endl;
-                    cout << "ÐÕÃû£º" << table[3] << endl;
-                    cout << "µç»°ºÅÂë£º" << table[4] << endl;
-                    cout << "µØÖ·£º" << table[5] << endl;
+                    cout << "ï¿½ï¿½Ñ¯ï¿½É¹ï¿½ï¿½ï¿½" << endl;
+                    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << table[3] << endl;
+                    cout << "ï¿½ç»°ï¿½ï¿½ï¿½ë£º" << table[4] << endl;
+                    cout << "ï¿½ï¿½Ö·ï¿½ï¿½" << table[5] << endl;
                     menu();
                 } else {
-                    cout << "²éÎÞ´ËÈË£¡" << endl;
+                    cout << "ï¿½ï¿½ï¿½Þ´ï¿½ï¿½Ë£ï¿½" << endl;
                     menu();
                 }
             }
@@ -73,19 +74,19 @@ void inquire() {
             char *errmsg = NULL;
             char **table = NULL;
             int r = 0, c = 0;
-            cout << "ÇëÊäÈëÐè²éÑ¯µÄµç»°£º";
+            cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½Äµç»°ï¿½ï¿½";
             cin >> number;
             sprintf(p, "select* from persons where tel = \'%s\';", number);
             sqlite3_get_table(db, p, &table, &r, &c, &errmsg);
             if (errmsg == NULL) {
                 if (r != 0) {
-                    cout << "²éÑ¯³É¹¦£¡" << endl;
-                    cout << "ÐÕÃû£º" << table[3] << endl;
-                    cout << "µç»°ºÅÂë£º" << table[4] << endl;
-                    cout << "µØÖ·£º" << table[5] << endl;
+                    cout << "ï¿½ï¿½Ñ¯ï¿½É¹ï¿½ï¿½ï¿½" << endl;
+                    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << table[3] << endl;
+                    cout << "ï¿½ç»°ï¿½ï¿½ï¿½ë£º" << table[4] << endl;
+                    cout << "ï¿½ï¿½Ö·ï¿½ï¿½" << table[5] << endl;
                     menu();
                 } else {
-                    cout << "²éÎÞ´ËÈË£¡" << endl;
+                    cout << "ï¿½ï¿½ï¿½Þ´ï¿½ï¿½Ë£ï¿½" << endl;
                     menu();
                 }
             }
@@ -97,7 +98,7 @@ void inquire() {
             break;
         }
         default: {
-            cout << "ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë!" << endl;
+            cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
             inquire();
             break;
         }
@@ -107,7 +108,7 @@ void inquire() {
 }
 
 void add() {
-    cout << "ÄãÑ¡ÔñÁËÐÂ½¨ÁªÏµÈË" << endl;
+    cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½Ïµï¿½ï¿½" << endl;
     sqlite3 *db;
     int ret = sqlite3_open("contacts.db", &db);
     if (ret != SQLITE_OK) {
@@ -122,11 +123,11 @@ void add() {
     char number[20];
     char address[100];
     char *errmsg = NULL;
-    cout << "ÇëÊäÈëÐÕÃû:";
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:";
     cin >> name;
-    cout << "ÇëÊäÈëµç»°ºÅÂë:";
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç»°ï¿½ï¿½ï¿½ï¿½:";
     cin >> number;
-    cout << "ÇëÊäÈëµØÖ·:";
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·:";
     cin >> address;
     sprintf(p1, "select *from persons where tel = \'%s\';", number);
     char **table = NULL;
@@ -135,7 +136,7 @@ void add() {
     sqlite3_get_table(db, p1, &table, &r, &c, &errmsg);
     if (errmsg == NULL) {
         if (r != 0) {
-            cout << "µç»°ºÅÂëÖØ¸´£¬ÒÑÂ¼ÈëµÄÁªÏµÈËÎª£º" << table[3] << "£¬ÇëÖØÐÂÂ¼Èë£¡" << endl;
+            cout << "ï¿½ç»°ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Îªï¿½ï¿½" << table[3] << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ë£¡" << endl;
             add();
         } else {
             sprintf(p2, "insert into persons values (\'%s\',\'%s\',\'%s\');", name, number, address);
@@ -143,7 +144,7 @@ void add() {
             sqlite3_close(db);
         }
     }
-    cout << "ÊÇ·ñ¼ÌÐøÌí¼Ó(1.ÊÇ 2.·ñ)?";
+    cout << "ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(1.ï¿½ï¿½ 2.ï¿½ï¿½)?";
     cin >> choice;
     if (choice == 1) {
         add();
@@ -153,7 +154,7 @@ void add() {
 }
 
 void del() {
-    cout << "ÄãÑ¡ÔñÁËÉ¾³ýÁªÏµÈË" << endl;
+    cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½" << endl;
     sqlite3 *db;
     int ret = sqlite3_open("contacts.db", &db);
     if (ret != SQLITE_OK) {
@@ -166,16 +167,16 @@ void del() {
     char **table = NULL;
     int r = 0, c = 0;
     int choice;
-    cout << "ÊäÈëÐèÒªÉ¾³ýµÄÁªÏµÈË£º";
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÉ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ë£ï¿½";
     cin >> name;
     sprintf(sql1, "select* from persons where name = \'%s\';", name);
     sqlite3_get_table(db, p1, &table, &r, &c, &errmsg);
     if (r != 0) {
-        cout << "²éÑ¯µ½ÁªÏµÈË£º" << endl;
-        cout << "ÐÕÃû£º" << table[3] << endl;
-        cout << "µç»°ºÅÂë£º" << table[4] << endl;
-        cout << "µØÖ·£º" << table[5] << endl;
-        cout << "È·ÈÏÉ¾³ý(1.È·ÈÏ 2.È¡Ïû)?";
+        cout << "ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ë£ï¿½" << endl;
+        cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << table[3] << endl;
+        cout << "ï¿½ç»°ï¿½ï¿½ï¿½ë£º" << table[4] << endl;
+        cout << "ï¿½ï¿½Ö·ï¿½ï¿½" << table[5] << endl;
+        cout << "È·ï¿½ï¿½É¾ï¿½ï¿½(1.È·ï¿½ï¿½ 2.È¡ï¿½ï¿½)?";
         cin >> choice;
         if (choice == 1) {
             errmsg = NULL;
@@ -186,21 +187,21 @@ void del() {
                 sqlite3_exec(db, p2, NULL, NULL, &errmsg);
                 sqlite3_get_table(db, p2, &table, &r, &c, &errmsg);
                 if (r == 0) {
-                    cout << "É¾³ý³É¹¦£¡";
+                    cout << "É¾ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½";
                 }
             }
         } else {
-            cout << "Î´É¾³ý£¡" << endl;
+            cout << "Î´É¾ï¿½ï¿½ï¿½ï¿½" << endl;
         }
     } else{
-        cout<<"²éÎÞ´ËÈË£¡"<<endl;
+        cout<<"ï¿½ï¿½ï¿½Þ´ï¿½ï¿½Ë£ï¿½"<<endl;
     }
     sqlite3_close(db);
     menu();
 }
 
 void edit() {
-    cout << "ÄãÑ¡ÔñÁËÐÞ¸ÄÁªÏµÈË" << endl;
+    cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½Ïµï¿½ï¿½" << endl;
     sqlite3 *db;
     char name[100];
     char sql1[100];
@@ -216,72 +217,72 @@ void edit() {
     if (ret != SQLITE_OK) {
         perror("sqlite3_open");
     }
-    cout << "ÊäÈëÐèÒªÐÞ¸ÄµÄÁªÏµÈË£º";
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Þ¸Äµï¿½ï¿½ï¿½Ïµï¿½Ë£ï¿½";
     cin >> name;
     sprintf(p1, "select* from persons where name = \'%s\';", name);
 
     sqlite3_get_table(db, p1, &table, &r, &c, &errmsg);
     if (r != 0) {
-        cout << "²éÑ¯µ½ÁªÏµÈË£º" << endl;
-        cout << "ÐÕÃû£º" << table[3] << endl;
-        cout << "µç»°ºÅÂë£º" << table[4] << endl;
-        cout << "µØÖ·£º" << table[5] << endl;
-        cout << "È·ÈÏÐÞ¸Ä(1.È·ÈÏ 2.È¡Ïû)?";
+        cout << "ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ë£ï¿½" << endl;
+        cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << table[3] << endl;
+        cout << "ï¿½ç»°ï¿½ï¿½ï¿½ë£º" << table[4] << endl;
+        cout << "ï¿½ï¿½Ö·ï¿½ï¿½" << table[5] << endl;
+        cout << "È·ï¿½ï¿½ï¿½Þ¸ï¿½(1.È·ï¿½ï¿½ 2.È¡ï¿½ï¿½)?";
         cin >> choice1;
         if (choice1 == 1) {
-            cout << "¿ÉÒÔÐÞ¸ÄµÄÏîÄ¿£º" << endl;
-            cout << "1.ÐÕÃû" << endl;
-            cout << "2.µç»°ºÅÂë" << endl;
+            cout << "ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Äµï¿½ï¿½ï¿½Ä¿ï¿½ï¿½" << endl;
+            cout << "1.ï¿½ï¿½ï¿½ï¿½" << endl;
+            cout << "2.ï¿½ç»°ï¿½ï¿½ï¿½ï¿½" << endl;
             cout << "3.×¡Ö·" << endl;
-            cout << "ÇëÑ¡ÔñÐèÒªÐÞ¸ÄµÄÏîÄ¿£º";
+            cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Òªï¿½Þ¸Äµï¿½ï¿½ï¿½Ä¿ï¿½ï¿½";
             cin >> choice2;
             switch (choice2) {
                 case 1: {
                     char new_name[100];
-                    cout << "ÇëÊäÈëÐÂÐÕÃû£º";
+                    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     cin >> new_name;
                     sprintf(p2, "update persons set name = \'%s\' where name = \'%s\'", new_name, name);
                     sqlite3_exec(db, p2, NULL, NULL, &errmsg);
-                    cout << "ÐÞ¸Ä³É¹¦£¡" << endl;
+                    cout << "ï¿½Þ¸Ä³É¹ï¿½ï¿½ï¿½" << endl;
                     sqlite3_close(db);
                     menu();
                     break;
                 }
                 case 2: {
                     char new_number[100];
-                    cout << "ÇëÊäÈëÐÂµç»°£º";
+                    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµç»°ï¿½ï¿½";
                     cin >> new_number;
                     sprintf(p2, "update persons set tel = \'%s\' where name = \'%s\'", new_number, name);
                     sqlite3_exec(db, p2, NULL, NULL, &errmsg);
-                    cout << "ÐÞ¸Ä³É¹¦£¡" << endl;
+                    cout << "ï¿½Þ¸Ä³É¹ï¿½ï¿½ï¿½" << endl;
                     sqlite3_close(db);
                     menu();
                     break;
                 }
                 case 3: {
                     char new_address[100];
-                    cout << "ÇëÊäÈëÐÂµØÖ·£º";
+                    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Ö·ï¿½ï¿½";
                     cin >> new_address;
                     sprintf(p2, "update persons set tel = \'%s\' where name = \'%s\'", new_address, name);
                     sqlite3_exec(db, p2, NULL, NULL, &errmsg);
-                    cout << "ÐÞ¸Ä³É¹¦£¡" << endl;
+                    cout << "ï¿½Þ¸Ä³É¹ï¿½ï¿½ï¿½" << endl;
                     sqlite3_close(db);
                     menu();
                     break;
                 }
                 default: {
-                    cout << "ÊäÈë´íÎó£¡" << endl;
+                    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
                     sqlite3_close(db);
                     del();
                     break;
                 }
             }
         } else {
-            cout << "Î´ÐÞ¸Ä£¡" << endl;
+            cout << "Î´ï¿½Þ¸Ä£ï¿½" << endl;
             menu();
         }
     } else {
-        cout << "²éÎÞ´ËÈË£¡" << endl;
+        cout << "ï¿½ï¿½ï¿½Þ´ï¿½ï¿½Ë£ï¿½" << endl;
         sqlite3_close(db);
         menu();
     }
@@ -289,14 +290,14 @@ void edit() {
 
 void menu() {
     int choice;
-    cout << "ÁªÏµÈË¹ÜÀíÏµÍ³" << endl;
-    cout << "Ö÷²Ëµ¥" << endl;
-    cout << "1.²éÑ¯ÁªÏµÈË" << endl;
-    cout << "2.ÐÂ½¨ÁªÏµÈË" << endl;
-    cout << "3.É¾³ýÁªÏµÈË" << endl;
-    cout << "4.ÐÞ¸ÄÁªÏµÈË" << endl;
-    cout << "0.ÍË³ö" << endl;
-    cout << "ÇëÑ¡Ôñ¹¦ÄÜ£º";
+    cout << "ï¿½ï¿½Ïµï¿½Ë¹ï¿½ï¿½ï¿½ÏµÍ³" << endl;
+    cout << "ï¿½ï¿½ï¿½Ëµï¿½" << endl;
+    cout << "1.ï¿½ï¿½Ñ¯ï¿½ï¿½Ïµï¿½ï¿½" << endl;
+    cout << "2.ï¿½Â½ï¿½ï¿½ï¿½Ïµï¿½ï¿½" << endl;
+    cout << "3.É¾ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½" << endl;
+    cout << "4.ï¿½Þ¸ï¿½ï¿½ï¿½Ïµï¿½ï¿½" << endl;
+    cout << "0.ï¿½Ë³ï¿½" << endl;
+    cout << "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ü£ï¿½";
     cin >> choice;
     switch (choice) {
         case 1:
@@ -312,11 +313,11 @@ void menu() {
             edit();
             break;
         case 0:
-            cout << "ÍË³öÏµÍ³£¡" << endl;
+            cout << "ï¿½Ë³ï¿½ÏµÍ³ï¿½ï¿½" << endl;
             exit(0);
             break;
         default:
-            cout << "ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë!" << endl;
+            cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!" << endl;
             main();
             break;
     }
