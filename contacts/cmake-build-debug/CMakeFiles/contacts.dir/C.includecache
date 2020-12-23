@@ -7,10 +7,10 @@
 #IncludeRegexTransform: 
 
 D:/work/contacts/main.c
+sqlite3.h
+-
 stdio.h
 -
 stdlib.h
 -
-sqlite3.h
-D:/work/contacts/sqlite3.h
 

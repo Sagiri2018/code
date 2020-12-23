@@ -1,27 +1,300 @@
+#include <sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "sqlite3.h"
+
+void menu();
 
 void inquire();
 
 void add();
 
-void delete();
+void del();
 
 void edit();
 
-void menu();
-
 int main() {
-    setbuf(stdout, NULL);
     menu();
     return 0;
 }
 
+void inquire() {
+    printf("ÄãÑ¡ÔñÁË²éÑ¯ÁªÏµÈË\n");
+    int choice1;
+    printf("ÇëÑ¡ÔñÄãÒª²éÑ¯µÄÒÀ¾İ\n");
+    printf("1.Í¨¹ıĞÕÃû²éÑ¯\n");
+    printf("2.Í¨¹ıÊÖ»úºÅ²éÑ¯\n");
+    printf("3.·µ»ØÉÏ²ã\n");
+    printf("ÇëÊäÈëÑ¡Ïî£º");
+    scanf("%d", &choice1);
+    switch (choice1) {
+        case 1: {
+            sqlite3 *db;
+            int ret = sqlite3_open("contacts.db", &db);
+            if (ret != SQLITE_OK) {
+                perror("sqlite3_open");
+            }
+            char name[20];
+            char sql1[100];
+            char *p = sql1;
+            char *errmsg = NULL;
+            char **table = NULL;
+            int r = 0, c = 0;
+            printf("ÇëÊäÈëĞè²éÑ¯µÄĞÕÃû£º");
+            scanf("%s", name);
+            sprintf(p, "select* from persons where name = \'%s\';", name);
+            sqlite3_get_table(db, p, &table, &r, &c, &errmsg);
+            if (errmsg == NULL) {
+                if (r != 0) {
+                    printf("²éÑ¯³É¹¦£¡\n");
+                    printf("ĞÕÃû£º%s\n", table[3]);
+                    printf("µç»°ºÅÂë£º%s\n", table[4]);
+                    printf("µØÖ·£º%s\n", table[5]);
+                    menu();
+                } else {
+                    printf("²éÎŞ´ËÈË£¡\n");
+                    menu();
+                }
+            }
+            sqlite3_close(db);
+            break;
+        }
+        case 2: {
+            sqlite3 *db;
+            int ret = sqlite3_open("contacts.db", &db);
+            if (ret != SQLITE_OK) {
+                perror("sqlite3_open");
+            }
+            char number[20];
+            char sql1[100];
+            char *p = sql1;
+            char *errmsg = NULL;
+            char **table = NULL;
+            int r = 0, c = 0;
+            printf("ÇëÊäÈëĞè²éÑ¯µÄµç»°£º");
+            scanf("%s",number);
+            sprintf(p, "select* from persons where tel = \'%s\';", number);
+            sqlite3_get_table(db, p, &table, &r, &c, &errmsg);
+            if (errmsg == NULL) {
+                if (r != 0) {
+                    printf("²éÑ¯³É¹¦£¡\n");
+                    printf("ĞÕÃû£º%s\n", table[3]);
+                    printf("µç»°ºÅÂë£º%s\n", table[4]);
+                    printf("µØÖ·£º%s\n", table[5]);
+                    menu();
+                } else {
+                    printf("²éÎŞ´ËÈË£¡\n");
+                    menu();
+                }
+            }
+            sqlite3_close(db);
+            break;
+        }
+        case 3: {
+            menu();
+            break;
+        }
+        default: {
+            printf("ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë!\n");
+            inquire();
+            break;
+        }
+    }
+
+
+}
+
+void add() {
+    printf("ÄãÑ¡ÔñÁËĞÂ½¨ÁªÏµÈË\n");
+    sqlite3 *db;
+    int ret = sqlite3_open("contacts.db", &db);
+    if (ret != SQLITE_OK) {
+        perror("sqlite3_open");
+    }
+    char sql1[100];
+    char sql2[100];
+    char *p1 = sql1;
+    char *p2 = sql2;
+    int choice;
+    char name[100];
+    char number[20];
+    char address[100];
+    char *errmsg = NULL;
+    printf("ÇëÊäÈëĞÕÃû:");
+    scanf("%s", name);
+    printf("ÇëÊäÈëµç»°ºÅÂë:");
+    scanf("%s", number);
+    printf("ÇëÊäÈëµØÖ·:");
+    scanf("%s", address);
+    sprintf(p1, "select *from persons where tel = \'%s\';", number);
+    char **table = NULL;
+    int r = 0, c = 0;
+    errmsg = NULL;
+    sqlite3_get_table(db, p1, &table, &r, &c, &errmsg);
+    if (errmsg == NULL) {
+        if (r != 0) {
+            printf("µç»°ºÅÂëÖØ¸´£¬ÒÑÂ¼ÈëµÄÁªÏµÈËÎª£º%s£¬ÇëÖØĞÂÂ¼Èë£¡\n", table[4]);
+            add();
+        } else {
+            sprintf(p2, "insert into persons values (\'%s\',\'%s\',\'%s\');", name, number, address);
+            sqlite3_exec(db, p2, NULL, NULL, &errmsg);
+            sqlite3_close(db);
+        }
+    }
+    printf("ÊÇ·ñ¼ÌĞøÌí¼Ó(1.ÊÇ 2.·ñ)?");
+    scanf("%d", &choice);
+    if (choice == 1) {
+        add();
+    } else {
+        main();
+    }
+}
+
+void del() {
+    printf("ÄãÑ¡ÔñÁËÉ¾³ıÁªÏµÈË");
+    sqlite3 *db;
+    int ret = sqlite3_open("contacts.db", &db);
+    if (ret != SQLITE_OK) {
+        perror("sqlite3_open");
+    }
+    char name[20] = "";
+    char sql1[100] = "";
+    char *p1 = sql1;
+    char *errmsg = NULL;
+    char **table = NULL;
+    int r = 0, c = 0;
+    int choice;
+    printf("ÊäÈëĞèÒªÉ¾³ıµÄÁªÏµÈË£º");
+    scanf("%s",name);
+    sprintf(sql1, "select* from persons where name = \'%s\';", name);
+    sqlite3_get_table(db, p1, &table, &r, &c, &errmsg);
+    if (r != 0) {
+        printf("²éÑ¯µ½ÁªÏµÈË£º\n");
+        printf("ĞÕÃû£º%s\n", table[3]);
+        printf("µç»°ºÅÂë£º%s\n", table[4]);
+        printf("µØÖ·£º%s\n", table[5]);
+        printf("È·ÈÏÉ¾³ı(1.È·ÈÏ 2.È¡Ïû)?");
+        scanf("%d",&choice);
+        if (choice == 1) {
+            errmsg = NULL;
+            if (r != 0) {
+                char sql2[100];
+                char *p2 = sql2;
+                sprintf(p2, "delete from persons where name = \'%s\';", name);
+                sqlite3_exec(db, p2, NULL, NULL, &errmsg);
+                sqlite3_get_table(db, p2, &table, &r, &c, &errmsg);
+                if (r == 0) {
+                    printf("É¾³ı³É¹¦£¡\n");
+                }
+            }
+        } else {
+            printf("Î´É¾³ı£¡\n");
+        }
+    } else {
+        printf("²éÎŞ´ËÈË£¡\n");
+    }
+    sqlite3_close(db);
+    menu();
+}
+
+void edit() {
+    printf("ÄãÑ¡ÔñÁËĞŞ¸ÄÁªÏµÈË\n");
+    sqlite3 *db;
+    char name[100];
+    char sql1[100];
+    char sql2[100];
+    char *p1 = sql1;
+    char *p2 = sql2;
+    char *errmsg = NULL;
+    char **table = NULL;
+    int r = 0, c = 0;
+    int choice1;
+    int choice2;
+    int ret = sqlite3_open("contacts.db", &db);
+    if (ret != SQLITE_OK) {
+        perror("sqlite3_open");
+    }
+    printf("ÊäÈëĞèÒªĞŞ¸ÄµÄÁªÏµÈË£º");
+    scanf("%s",name);
+    sprintf(p1, "select* from persons where name = \'%s\';", name);
+
+    sqlite3_get_table(db, p1, &table, &r, &c, &errmsg);
+    if (r != 0) {
+        printf("²éÑ¯µ½ÁªÏµÈË£º\n");
+        printf("ĞÕÃû£º\n", table[3]);
+        printf("µç»°ºÅÂë£º\n", table[4]);
+        printf("µØÖ·£º\n", table[5]);
+        printf("È·ÈÏĞŞ¸Ä(1.È·ÈÏ 2.È¡Ïû)?");
+        scanf("%d", &choice1);
+        if (choice1 == 1) {
+            printf("¿ÉÒÔĞŞ¸ÄµÄÏîÄ¿£º\n");
+            printf("1.ĞÕÃû\n");
+            printf("2.µç»°ºÅÂë\n");
+            printf("3.×¡Ö·\n");
+            printf("ÇëÑ¡ÔñĞèÒªĞŞ¸ÄµÄÏîÄ¿£º");
+            scanf("%d", &choice2);
+            switch (choice2) {
+                case 1: {
+                    char new_name[100];
+                    printf("ÇëÊäÈëĞÂĞÕÃû£º");
+                    scanf("%s", new_name);
+                    sprintf(p2, "update persons set name = \'%s\' where name = \'%s\'", new_name, name);
+                    sqlite3_exec(db, p2, NULL, NULL, &errmsg);
+                    printf("ĞŞ¸Ä³É¹¦£¡\n");
+                    sqlite3_close(db);
+                    menu();
+                    break;
+                }
+                case 2: {
+                    char new_number[100];
+                    printf("ÇëÊäÈëĞÂµç»°£º");
+                    scanf("%s", new_number);
+                    sprintf(p2, "update persons set tel = \'%s\' where name = \'%s\'", new_number, name);
+                    sqlite3_exec(db, p2, NULL, NULL, &errmsg);
+                    printf("ĞŞ¸Ä³É¹¦£¡\n");
+                    sqlite3_close(db);
+                    menu();
+                    break;
+                }
+                case 3: {
+                    char new_address[100];
+                    printf("ÇëÊäÈëĞÂµØÖ·£º");
+                    scanf("%s", new_address);
+                    sprintf(p2, "update persons set tel = \'%s\' where name = \'%s\'", new_address, name);
+                    sqlite3_exec(db, p2, NULL, NULL, &errmsg);
+                    printf("ĞŞ¸Ä³É¹¦£¡\n");
+                    sqlite3_close(db);
+                    menu();
+                    break;
+                }
+                default: {
+                    printf("ÊäÈë´íÎó£¡\n");
+                    sqlite3_close(db);
+                    del();
+                    break;
+                }
+            }
+        } else {
+            printf("Î´ĞŞ¸Ä£¡\n");
+            menu();
+        }
+    } else {
+        printf("²éÎŞ´ËÈË£¡\n");
+        sqlite3_close(db);
+        menu();
+    }
+}
+
 void menu() {
     int choice;
-    printf("ä¸»èœå•\n1.æŸ¥è¯¢è”ç³»äºº\n2.æ–°å»ºè”ç³»äºº\n3.åˆ é™¤è”ç³»äºº\n4.ä¿®æ”¹è”ç³»äºº\n0.é€€å‡º\nè¯·é€‰æ‹©åŠŸèƒ½ï¼š");
-    scanf("%d", &choice);
+    printf("ÁªÏµÈË¹ÜÀíÏµÍ³\n");
+    printf("Ö÷²Ëµ¥\n");
+    printf("1.²éÑ¯ÁªÏµÈË\n");
+    printf("2.ĞÂ½¨ÁªÏµÈË\n");
+    printf("3.É¾³ıÁªÏµÈË\n");
+    printf("4.ĞŞ¸ÄÁªÏµÈË\n");
+    printf("0.ÍË³ö\n");
+    printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
+    scanf("%d",&choice);
     switch (choice) {
         case 1:
             inquire();
@@ -30,69 +303,18 @@ void menu() {
             add();
             break;
         case 3:
-            delete();
+            del();
+            break;
         case 4:
             edit();
             break;
         case 0:
+            printf("ÍË³öÏµÍ³£¡\n");
             exit(0);
             break;
         default:
-            printf("è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼\n");
+            printf("ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë!\n");
             main();
             break;
     }
-}
-
-
-void inquire() {
-    printf("ä½ é€‰æ‹©äº†æŸ¥è¯¢è”ç³»äºº\n");
-
-}
-
-void add() {
-    printf("ä½ é€‰æ‹©äº†æ–°å»ºè”ç³»äºº\n");
-    int choice;
-    sqlite3 *db;
-    int ret = sqlite3_open("contacts.db", &db);
-    if (ret != SQLITE_OK) {
-        perror("sqlite3_open");
-    }
-    char *sql1;
-    char name[100];
-    char number[20];
-    char address[100];
-    char *errmsg = NULL;
-    printf("è¯·è¾“å…¥å§“åï¼š");
-    scanf("%s", name);
-//    sprintf(sql1,"select name from persons where name = \'%s\';",name);
-//    int ret1=sqlite3_exec(db,sql1,NULL,NULL,&errmsg);
-//    if (ret1==1){
-//        printf("æ•°æ®åº“ä¸­å·²æœ‰æ­¤æ•°æ®, è¯·é‡æ–°æ·»åŠ ï¼");
-//        add();
-//    }
-    printf("è¯·è¾“å…¥ç”µè¯å·ç ï¼š");
-    scanf("%s", number);
-    printf("è¯·è¾“å…¥åœ°å€ï¼š");
-    scanf("%s", address);
-    sprintf(sql1, "insert into persons values (\'%s\',\'%s\',\'%s\');", name, number, address);
-    sqlite3_exec(db, sql1, NULL, NULL, &errmsg);
-    sqlite3_close(db);
-    printf("æ˜¯å¦ç»§ç»­æ·»åŠ (1.æ˜¯,2.å¦):");
-    scanf("%d", &choice);
-    if (choice == 1) {
-        add();
-    } else if (choice == 2) {
-        main();
-    } else {
-        printf("è¾“å…¥é”™è¯¯ï¼Œå›åˆ°ä¸»èœå•\n");
-    }
-}
-
-void delete() {
-
-}
-
-void edit() {
-
 }
